@@ -5,22 +5,23 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 6.5.2 COMPONENTS Core Quick REQUIRED)
-#qt_policy(SET QTP0001 NEW)
 
-set(CPP_SOURCES widgetmodel.h ${CMAKE_CURRENT_SOURCE_DIR}/widgetmodel.cpp)
+qt_standard_project_setup()
+
+if(QT_KNOWN_POLICY_QTP0001)
+    qt_policy(SET QTP0001 NEW) # >Qt6.5 only. Enabling this policy ensures that your QML module is placed under a default import path, and its types can be found without manual calls to QQmlEngine::addImportPath.
+endif()
+
 qt_add_qml_module(MyModule
     URI MyModule
+    PLUGIN_TARGET MyModule
+    NO_CACHEGEN
+    NO_LINT
+    OUTPUT_DIRECTORY MyModule
     VERSION 1.0
     STATIC
-    OUTPUT_DIRECTORY MyModule
-    QML_FILES MyModel.qml
-    SOURCES
-        ${CPP_SOURCES}
-    DEPENDENCIES QtCore
-    IMPORT_PATH ${CMAKE_CURRENT_BINARY_DIR}
-    ENABLE_TYPE_COMPILER
+    QML_FILES MyRectangle.qml
 )
-target_link_libraries(MyModule PRIVATE Qt6::Core Qt6::Quick Qt6::QuickPrivate)
 
 qt_add_executable(appuntitled
     main.cpp
@@ -29,7 +30,10 @@ qt_add_executable(appuntitled
 qt_add_qml_module(appuntitled
     URI untitled
     VERSION 1.0
-    QML_FILES main.qml
+    NO_CACHEGEN
+    NO_LINT
+    QML_FILES
+        main.qml
 )
 cmake_policy(SET CMP0001 NEW)
 
@@ -42,7 +46,7 @@ set_target_properties(appuntitled PROPERTIES
 )
 
 target_link_libraries(appuntitled
-    PRIVATE Qt6::Core Qt6::Quick MyModuleplugin)
+    PRIVATE Qt6::Core Qt6::Quick MyModule)
 
 install(TARGETS appuntitled
     BUNDLE DESTINATION .

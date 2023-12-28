@@ -1,5 +1,5 @@
 import QtQuick
-import MyModule
+import MyModule 1.0
 
 Window {
 	width: 640
@@ -7,5 +7,10 @@ Window {
 	visible: true
 	title: qsTr("Hello qmltc")
 
-	MyModel {}
+	MyRectangle {}
+
+	Loader {
+		anchors.bottom: parent.bottom
+		source: "file:///home/dmcinnes/git/build-helloQmlTc-Desktop_Qt_6_5_2_GCC_64bit-Debug/MyModule/MyRectangle.qml"
+	}
 }

@@ -1,5 +1,4 @@
 import QtQuick
-import MyModule
 
 Rectangle {
 	width: 100
