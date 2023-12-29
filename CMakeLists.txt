@@ -19,7 +19,6 @@ qt_add_qml_module(MyModule
     NO_LINT
     OUTPUT_DIRECTORY MyModule
     VERSION 1.0
-    STATIC
     QML_FILES MyRectangle.qml
 )
 
@@ -46,7 +45,7 @@ set_target_properties(appuntitled PROPERTIES
 )
 
 target_link_libraries(appuntitled
-    PRIVATE Qt6::Core Qt6::Quick MyModule)
+    PRIVATE Qt6::Core Qt6::Quick)
 
 install(TARGETS appuntitled
     BUNDLE DESTINATION .
