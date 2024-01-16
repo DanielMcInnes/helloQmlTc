@@ -7,5 +7,7 @@ Window {
 	visible: true
 	title: qsTr("Hello qmltc")
 
-	MyModel {}
+	LongSwitchCaseStatement {
+		anchors.fill: parent
+	}
 }
